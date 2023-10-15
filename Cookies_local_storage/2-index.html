@@ -37,28 +37,26 @@
         }
 
         function showCookies() {
-            var cookies = document.cookie.split("; ");
-            var cookieText = "";
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].split("=");
-                if (cookie[0] === 'Firstname' || cookie[0] === 'Email') {
-                    cookieText += ' ' + cookie[0] + ": " + cookie[1] + " - ";
-                }
-            }
+            var emailCookie = getCookie("Email");
+            var firstnameCookie = getCookie("Firstname");
+
+            var cookieText = "Email: " + emailCookie + " - Firstname: " + firstnameCookie;
+
             var p = document.createElement("p");
-            p.innerHTML = cookieText;
+            p.textContent = cookieText;
             document.body.appendChild(p);
         }
+
         function getCookie(name) {
-    var cookies = document.cookie.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].split("=");
-        if (cookie[0].trim() === name) {
-            return cookie[1];
+            var cookies = document.cookie.split(";");
+            for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].split("=");
+            if (cookie[0].trim() === name) {
+                return cookie[1];
+            }
         }
-    }
-    return '';
-    }  
+        return '';
+        }  
     </script>
 
     <style>
