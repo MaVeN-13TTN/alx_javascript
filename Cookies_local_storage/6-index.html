@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+</head>
+<body>
+</body>
+</html>
+
+<script>
+    // Create an array of available items
+    const availableItems = ["Shampoo", "Soap", "Sponge", "Water"];
+
+    // Check if session storage is available
+    if (typeof (Storage) === "undefined" || typeof sessionStorage === "undefined") {
+        alert("Sorry, your browser does not support Web storage. Try again with a better one");
+    } else {
+        // Session storage is available, proceed with the application
+        createStore();
+        displayCart();
+    }
+
+    // Function to add an item to the cart
+    function addItemToCart(item) {
+        sessionStorage.setItem(item, 'true');
+    }
+
+    // Function to create the store and display available items
+    function createStore() {
+        const ul = document.createElement('ul');
+        document.body.appendChild(ul);
+
+        availableItems.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            li.addEventListener('click', () => addItemToCart(item));
+            ul.appendChild(li);
+        });
+    }
+
+    // Function to display the cart
+    function displayCart() {
+        var cartItems = Object.keys(sessionStorage);
+        if (cartItems.length > 1) {//if the local storage does not contain any item, this function does not do anything
+            var p = document.createElement("p");
+            // You previously had X items in your cart
+            p.textContent = "You previously had " +( cartItems.length-1) + " item(s) in your cart.";
+            document.body.appendChild(p);
+        }
+    }
+</script>
+
+<style>
+    li:hover {
+        color: blue;
+    }
+</style>
