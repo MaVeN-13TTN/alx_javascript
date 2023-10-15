@@ -13,11 +13,12 @@
         <h2>Login to the website</h2>
         <input type="text" id="firstname" placeholder="First Name"><br>
         <input type="text" id="email" placeholder="Email"><br>
-        <button onclick="setCookies()">Log me in</button>
+        <button onclick="setCookies()" id="lgbtn">Log me in</button>
     </div>
 
     <script>
-                function setCookies(days = 10) {
+     //Function to set cookies expiry   
+        function setCookies(days = 10) {
             const d = new Date();
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
             let expires = "expires=" + d.toUTCString();
@@ -26,35 +27,28 @@
             document.cookie = "Firstname=" + firstname + ';' + expires;
             document.cookie = "Email=" + email + ';' + expires;
         }
+    //Function to show cookies
+    function showCookies() {
+            var emailCookie = getCookie("Email");
+            var firstnameCookie = getCookie("Firstname");
 
-        function showCookies() {
-            var cookies = document.cookie.split("; ");
-            var cookieText = "";
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].split("=");
-                if (cookie[0] === 'Firstname' || cookie[0] === 'Email') {
-                    cookieText += ' ' + cookie[0] + ": " + cookie[1] + " - ";
-                }
-            }
+            var cookieText = "Email: " + emailCookie + " - Firstname: " + firstnameCookie;
+
             var p = document.createElement("p");
-            p.innerHTML = cookieText;
+            p.textContent = cookieText;
             document.body.appendChild(p);
         }
-
+    //Function to get cookies
         function getCookie(name) {
-
             var cookies = document.cookie.split(";");
-            // console.log(cookies)
             for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].split("=");
-                // console.log(cookie,cookie[0])
-                if (cookie[0] == '' + name) {
-                    console.log(cookie[0], cookie[1])
-                    return cookie[1];
-                }
-                return ''
+            var cookie = cookies[i].split("=");
+            if (cookie[0].trim() === name) {
+                return cookie[1];
             }
         }
+        return '';
+        } 
     // Function to show the login form
         function showForm() {
         const welcomeMessage = document.getElementById("welcome-message");
@@ -99,6 +93,7 @@
             welcomeMessage.textContent = `Welcome ${firstname} (logout)`;
 
             const logoutLink = document.createElement("a");
+            logoutLink.href = "#";
             logoutLink.textContent = "(logout)";
             logoutLink.style.fontStyle = "italic";
             logoutLink.style.marginLeft = "10px";
@@ -130,5 +125,11 @@
     // Call showWelcomeMessageOrForm to determine whether to show the welcome message or the login form
     showWelcomeMessageOrForm();
     </script>
+    <style>
+        #firstname, #email, #lgbtn{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </body>
 </html>
