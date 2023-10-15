@@ -17,6 +17,44 @@
     </div>
 
     <script>
+                function setCookies(days = 10) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            var firstname = document.getElementById("firstname").value;
+            var email = document.getElementById("email").value;
+            document.cookie = "Firstname=" + firstname + ';' + expires;
+            document.cookie = "Email=" + email + ';' + expires;
+        }
+
+        function showCookies() {
+            var cookies = document.cookie.split("; ");
+            var cookieText = "";
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].split("=");
+                if (cookie[0] === 'Firstname' || cookie[0] === 'Email') {
+                    cookieText += ' ' + cookie[0] + ": " + cookie[1] + " - ";
+                }
+            }
+            var p = document.createElement("p");
+            p.innerHTML = cookieText;
+            document.body.appendChild(p);
+        }
+
+        function getCookie(name) {
+
+            var cookies = document.cookie.split(";");
+            // console.log(cookies)
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].split("=");
+                // console.log(cookie,cookie[0])
+                if (cookie[0] == '' + name) {
+                    console.log(cookie[0], cookie[1])
+                    return cookie[1];
+                }
+                return ''
+            }
+        }
     // Function to show the login form
         function showForm() {
         const welcomeMessage = document.getElementById("welcome-message");
