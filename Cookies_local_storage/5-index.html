@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+</head>
+<body>
+</body>
+</html>
+
+<script>
+    // Create an array of available items
+    const availableItems = ["Shampoo", "Soap", "Sponge", "Water"];
+
+    // Check if local storage is available
+    if (typeof (Storage) === "undefined") {
+        alert("Sorry, your browser does not support Web storage. Try again with a better one");
+    } else {
+        // Local storage is available, proceed with the application
+        createStore();
+        displayCart();
+    }
+
+    // Function to add an item to the cart
+    function addItemToCart(item) {
+        localStorage.setItem(item, 'true');
+    }
+
+    // Function to create the store and display available items
+    function createStore() {
+        const ul = document.createElement('ul');
+        document.body.appendChild(ul);
+
+        availableItems.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            li.addEventListener('click', () => addItemToCart(item));
+            ul.appendChild(li);
+        });
+    }
+
+    // Function to display the cart
+    function displayCart() {
+        const cartItems = Object.keys(localStorage);
+        if (cartItems.length > 0) {
+            const message = `You previously had ${cartItems.length} item(s) in your cart.`;
+            const p = document.createElement('p');
+            p.textContent = message;
+            document.body.appendChild(p);
+        }
+    }
+
+</script>
+
+<style>
+    li:hover {
+        color: blue;
+    }
+</style>
