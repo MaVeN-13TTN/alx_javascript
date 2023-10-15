@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.1.2/src/js.cookie.js"></script>
+</head>
+<body>
+    <div id="login-form">
+        <p>
+        <h2>Login to the website</h2>
+        </p>
+        <div class="div-1">
+            <form action="" class="div-1">
+
+                <input type="text" id="firstname" placeholder="First Name" required><br>
+                <input type="email" id="email" placeholder="Email" required><br>
+                <button onclick="setCookies()" id="lgbtn">Log me in</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to set cookies and show the welcome message
+        function setCookiesAndShowWelcomeMessage(days = 10) {
+            const firstname = document.getElementById("firstname").value;
+            const email = document.getElementById("email").value;
+            
+            // Set cookies using js-cookie
+            Cookies.set("Firstname", firstname, { expires: days });
+            Cookies.set("Email", email, { expires: days });
+
+            showWelcomeMessageOrForm();
+        }
+
+        // Function to show cookies
+        function showCookies() {
+            const emailCookie = Cookies.get("Email");
+            const firstnameCookie = Cookies.get("Firstname");
+
+            const cookieText = `Email: ${emailCookie} - Firstname: ${firstnameCookie}`;
+
+            const p = document.createElement("p");
+            p.textContent = cookieText;
+            document.body.appendChild(p);
+        }
+        //Function to get cookies
+        function getCookie(name) {
+            return Cookies.get(name);
+        }
+
+
+        // Function to show the login form
+        function showForm() {
+            const welcomeMessage = document.getElementById("welcome-message");
+            if (welcomeMessage) {
+                welcomeMessage.style.display = "none";
+            }
+            const loginForm = document.getElementById("login-form");
+            if (loginForm) {
+                loginForm.style.display = "block";
+            }
+        }
+
+        // Function to hide the login form
+        function hideForm() {
+            const loginForm = document.getElementById("login-form");
+            if (loginForm) {
+                loginForm.style.display = "none";
+            }
+        }
+
+        // Function to delete cookies and show the login form
+        function deleteCookiesAndShowForm() {
+            // Remove cookies using js-cookie
+            Cookies.remove("Firstname");
+            Cookies.remove("Email");
+
+            showForm();
+        }
+
+        // Function to show the welcome message or the login form
+        function showWelcomeMessageOrForm() {
+            const firstnameCookie = Cookies.get("Firstname");
+
+            if (!firstnameCookie) {
+                // User is not logged in
+                showForm();
+            } else {
+                // User is logged in
+                const body = document.body;
+                body.innerHTML = ''; // Clear the existing content
+
+                const welcomeMessage = document.createElement("h1");
+                const firstname = firstnameCookie;
+                welcomeMessage.textContent = `Welcome ${firstname} (logout)`;
+
+                const logoutLink = document.createElement("a");
+                logoutLink.href = "#";
+                logoutLink.textContent = "(logout)";
+                logoutLink.style.fontStyle = "italic";
+                logoutLink.style.marginLeft = "10px";
+                logoutLink.style.cursor = "pointer";
+
+                // Add a click event to the logout link
+                logoutLink.addEventListener("click", function () {
+                    deleteCookiesAndShowForm();
+                    hideForm();
+                });
+
+                welcomeMessage.appendChild(logoutLink);
+                body.appendChild(welcomeMessage);
+            }
+        }
+    </script>
+
+    <style>
+        #firstname, #email, #lgbtn {
+            display: flex;
+            justify-content: center;
+        }
+        
+    </style>
+</body>
+</html>
